@@ -27,6 +27,7 @@ const CONTROL_MESSAGES = Object.freeze({
 
 //const wsAddress = 'ws://echo.websocket.org/';
 const wsAddress = 'ws://192.168.1.150:8080/';
+//const wsAddress = 'wss://192.168.1.150:8080/';
 let websocket = {};
 clientStatus.value = 'OK';
 clientIdentity.value = `VAC${Math.floor(Math.random() * 10000)}`;
@@ -105,6 +106,7 @@ makeConnection.addEventListener('click', () => {
 
 /* Open a connection to the WebSocket Server */
 closeConnection.addEventListener('click', () => {
+    /* This fires a CloseEvent ~see https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent */
     websocket.close(1000, 'Done for the day');
     makeConnection.disabled = false;
     closeConnection.disabled = true;

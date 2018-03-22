@@ -5,8 +5,9 @@ const fs = require('fs');
 const morgan = require('morgan');
 const path = require('path');
 // const url = require('url');
-const uuid = require('uuid');
+// const uuid = require('uuid');
 const http = require('http');
+//const https = require('https');
 const WebSocket = require('ws');
 
 const app = express();
@@ -38,6 +39,13 @@ app.use(morgan('combined', {stream: accessLogStream}));
 
 /* We startup our http and WebSocket servers. We also make a Map to easily track the specifics of connected clients */
 const server = http.createServer(app);
+
+/* TODO: HTTPS server with SSL Certs
+   locally created: openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 100 -nodes
+*/
+// const key = fs.readFileSync(`${__dirname}/../certificates/key.pem`, 'utf8');
+// const cert = fs.readFileSync(`${__dirname}/../certificates/cert.pem`, 'utf8');
+// const server = https.createServer({ key, cert }, app);
 let wss = {};
 
 /* Broadcast a message to all connected clients */
@@ -53,6 +61,9 @@ const broadCastMessage = function(type, content){
 const startWebSocketServer = function() {
     wss = new WebSocket.Server({server, clientTracking: true});
     const connectedClients = new Map();
+
+    /* Emitted before the response headers are written to the socket as part of the handshake. This allows you to inspect/modify the headers before they are sent. */
+    wss.on('headers', function(headers, request){});
 
     /* Each time a client connects, we kick off this handler */
     wss.on('connection', function connection(ws, req) {
