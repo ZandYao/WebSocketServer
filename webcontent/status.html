@@ -7,6 +7,35 @@
             section {
                 margin-bottom: 1em;
             }
+            #websocketClients {
+                float: right;
+                background-color: cornflowerblue;
+                width: 50%;
+                height: 25em;
+            }
+            #websocketClients p {
+                margin: -1.1em 0 0 0;
+            }
+            #settings {
+                width: 50%
+            }
+            #target_client {
+                width: 10em;
+            }
+            td, th {
+                padding: 10px;
+                border: 1px solid black;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            #client_identity {
+                background-color: greenyellow;
+            }
+            #target_client {
+                background-color: cornflowerblue;
+            }
             #results {
                 padding: 1em;
                 background-color: bisque;
@@ -24,12 +53,11 @@
                 width: 20em;
                 background-color: indianred;
             }
-            #uuid {
-                width: 20em;
-                background-color: forestgreen;
-            }
             .hidden {
                 display: none;
+            }
+            .no-connect {
+                opacity: 0.5;
             }
         </style>
     </head>
@@ -37,50 +65,75 @@
     <body>
         <header>
             <h3>Connection status: <span id="status">DISCONNECTED</span></h3>
-            <h5 id="errormsg" class="hidden">COULD NOT CONNECT</h5>
-            <h5 id="uuid">NONE SET</h5>
+            <h5 id="errormsg" class="hidden">COULD NOT CONNECT (try again in ~5s)</h5>
         </header>
 
         <main>
+            <article id="websocketClients" class="no-connect">
+                <p>WebSocket Clients</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>VAC ID</th>
+                            <th>IP</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="websocketClientData">
+                    </tbody>
+                </table>
+            </article>
+
+            <article id="settings">
+                <section>
+                    <div><label for="msg_type">Select a message type</label></div>
+                    <select id="msg_type">
+                        <option value="RESET_SERVER">RESET_SERVER</option>
+                        <option value="SEND_DATA" selected>SEND_DATA</option>
+                        <option value="TARGET_CLIENT">TARGET_CLIENT</option>
+                        <option value="BROADCAST">BROADCAST</option>
+                    </select>
+                </section>
+
+                <section>
+                    <div><label for="client_identity">Something that uniquely represents you</label></div>
+                    <input id="client_identity" type="text">
+                </section>
+
+                <section>
+                    <div><label for="target_client">Target a client to message</label></div>
+                    <select id="target_client" class="no-connect" disabled>
+                    </select>
+                </section>
+
+                <section>
+                    <div><label for="client_status">Something for your status</label></div>
+                    <input id="client_status" type="text">
+                </section>
+
+                <section>
+                    <div><label for="textmsg">Enter text message for data</label></div>
+                    <textarea id="textmsg" rows="5"></textarea>
+                </section>
+
+                <section>
+                    <button id="send" type="button" disabled>Send message</button>
+                </section>
+
+                <section>
+                    <label>Toggle connection</label>
+                    <button id="connect" type="button">Connect</button>
+                    <button id="close" type="button" disabled>Close</button>
+                </section>
+            </article>
 
 
-            <section>
-                <div><label for="msg_type">Select a message type</label></div>
-                <select id="msg_type">
-                    <option value="SHUT_DOWN">SHUT_DOWN</option>
-                    <option value="SEND_DATA" selected>SEND_DATA</option>
-                </select>
-            </section>
 
-            <section>
-                <div><label for="client_identity">Something that uniquely represents you</label></div>
-                <input id="client_identity" type="text">
-            </section>
-
-            <section>
-                <div><label for="client_status">Something for your status</label></div>
-                <input id="client_status" type="text">
-            </section>
-
-            <section>
-                <div><label for="textmsg">Enter text message for data</label></div>
-                <textarea id="textmsg" rows="5"></textarea>
-            </section>
-
-            <section>
-                <button id="send" type="button" disabled>Send message</button>
-            </section>
-
-            <section>
-                <label>Toggle connection</label>
-                <button id="connect" type="button">Connect</button>
-                <button id="close" type="button" disabled>Close</button>
-            </section>
-
-            <section id="response">
-                <label for="results">The response was to your message was:</label>
-                <output id="results" for="textmsg"></output>
-            </section>
+            <footer id="response">
+                <label for="results">Server Messages</label>
+                <output id="results"></output>
+            </footer>
 
         </main>
     </body>
