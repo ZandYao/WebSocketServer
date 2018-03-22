@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>WebSocket Server Status</title>
+        <meta charset="UTF-8">
+        <style>
+            section {
+                margin-bottom: 1em;
+            }
+            #results {
+                padding: 1em;
+                background-color: bisque;
+                font-style: italic;
+                color: blueviolet;
+                border: 1px solid black;
+                min-width: 20em;
+                max-width: 30em;
+                display: block;
+            }
+            #response {
+                margin-top: 20px;
+            }
+            #errormsg {
+                width: 20em;
+                background-color: indianred;
+            }
+            #uuid {
+                width: 20em;
+                background-color: forestgreen;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h3>Connection status: <span id="status">DISCONNECTED</span></h3>
+            <h5 id="errormsg" class="hidden">COULD NOT CONNECT</h5>
+            <h5 id="uuid">NONE SET</h5>
+        </header>
+
+        <main>
+
+
+            <section>
+                <div><label for="msg_type">Select a message type</label></div>
+                <select id="msg_type">
+                    <option value="SHUT_DOWN">SHUT_DOWN</option>
+                    <option value="SEND_DATA" selected>SEND_DATA</option>
+                </select>
+            </section>
+
+            <section>
+                <div><label for="client_identity">Something that uniquely represents you</label></div>
+                <input id="client_identity" type="text">
+            </section>
+
+            <section>
+                <div><label for="client_status">Something for your status</label></div>
+                <input id="client_status" type="text">
+            </section>
+
+            <section>
+                <div><label for="textmsg">Enter text message for data</label></div>
+                <textarea id="textmsg" rows="5"></textarea>
+            </section>
+
+            <section>
+                <button id="send" type="button" disabled>Send message</button>
+            </section>
+
+            <section>
+                <label>Toggle connection</label>
+                <button id="connect" type="button">Connect</button>
+                <button id="close" type="button" disabled>Close</button>
+            </section>
+
+            <section id="response">
+                <label for="results">The response was to your message was:</label>
+                <output id="results" for="textmsg"></output>
+            </section>
+
+        </main>
+    </body>
+
+    <script type="text/javascript" src="socketmsg.js"></script>
+</html>
