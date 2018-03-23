@@ -1,3 +1,13 @@
+/*
+    The address of the WebSocket Server
+    - if '?host=192.168.1.150:8080' query string is present, then assume WebSocket server is on the supplied host
+*/
+const serverWebSocket = 'ws://45.33.83.200:8080/';
+const customWebSocket = (new URL(location.href)).searchParams.get('host');
+const wsAddress = customWebSocket ? `ws://${customWebSocket}` : serverWebSocket;
+//const wssAddress = 'wss://192.168.1.150:8080/';
+let websocket = {};
+
 /* Shortcuts to DOM elements */
 const msgType = document.getElementById('msg_type');
 const clientStatus = document.getElementById('client_status');
@@ -25,10 +35,7 @@ const CONTROL_MESSAGES = Object.freeze({
     TARGET_CLIENT: 'TARGET_CLIENT',
 });
 
-//const wsAddress = 'ws://echo.websocket.org/';
-const wsAddress = 'ws://192.168.1.150:8080/';
-//const wsAddress = 'wss://192.168.1.150:8080/';
-let websocket = {};
+/* Some initial defaults  */
 clientStatus.value = 'OK';
 clientIdentity.value = `VAC${Math.floor(Math.random() * 10000)}`;
 

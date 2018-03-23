@@ -4,6 +4,7 @@ const express = require('express');
 const fs = require('fs');
 const morgan = require('morgan');
 const path = require('path');
+const { DateTime } = require('luxon');
 // const url = require('url');
 // const uuid = require('uuid');
 const http = require('http');
@@ -33,7 +34,20 @@ app.use(responseHeaders);
 /* We will serve up our demo-web-page too. */
 app.use(express.static('webcontent'));
 
-/* Create a write stream (in append mode) & setup logging for http requests (does not log WebSocket connections. maybe can find a good library to..) */
+/* Send off the log files if they are requested */
+app.get('/access_log', function(req, res){
+    res.sendFile(path.resolve(`${__dirname}/../access.log`));
+});
+app.get('/websocket_log', function(req, res){
+    res.sendFile(path.resolve(`${__dirname}/../websocket.log`));
+});
+
+/*
+    Create a write stream (in append mode) & setup logging for http requests.
+    This does not log WebSocket connections. maybe can find a good library to,
+    in the meantime will just do console.log & bash redirection to track exchanges;
+    node src/index.js >> websocket.log 2>&1 &
+*/
 const accessLogStream = fs.createWriteStream(path.resolve(`${__dirname}/../access.log`), {flags: 'a'});
 app.use(morgan('combined', {stream: accessLogStream}));
 
@@ -69,7 +83,7 @@ const startWebSocketServer = function() {
     wss.on('connection', function connection(ws, req) {
         // const location = url.parse(req.url, true);
         const ip = req.connection.remoteAddress;
-        const id = uuid.v4();
+        // const id = uuid.v4();
         console.log(`Connected to ${ip}`);
 
         /* Store a reference to the client by it's ws object */
@@ -154,9 +168,10 @@ const startWebSocketServer = function() {
 /* Start the Server */
 startWebSocketServer();
 
+/* Log the Server Start/Restart time */
 server.listen(8080, function listening() {
     const serverParams = wss.address();
-    console.log(`Listening on %d`, server.address().port);
+    console.log(`Server-Started ${DateTime.local().setZone('America/Toronto').toLocaleString(DateTime.DATETIME_SHORT)}: Listening on ${serverParams.port}`);
     // console.log(`${wss.url}`);
-    console.log(`${serverParams.address} | ${serverParams.family} | ${serverParams.port}`);
+    // console.log(`${serverParams.address} | ${serverParams.family} | ${serverParams.port}`);
 });
