@@ -31,8 +31,20 @@ const responseHeaders = function(req, res, next){
 };
 app.use(responseHeaders);
 
-/* We will serve up our demo-web-page too. */
-app.use(express.static('webcontent'));
+/*
+    For some reason, when server is started as systemd service, get this error when trying to access content defined by express.static;
+      Content Security Policy: The page’s settings blocked the loading of a resource at self (“default-src”)
+    Will use long form gets, as they seem to be unaffected.
+*/
+//app.use(express.static('webcontent'));
+
+/* We will serve up our demo-web-page. */
+app.get('/status*', function(req, res){
+    res.sendFile(path.resolve(`${__dirname}/../webcontent/status.html`));
+});
+app.get('/socketmsg.js', function(req, res){
+    res.sendFile(path.resolve(`${__dirname}/../webcontent/socketmsg.js`));
+});
 
 /* Send off the log files if they are requested */
 app.get('/access_log', function(req, res){

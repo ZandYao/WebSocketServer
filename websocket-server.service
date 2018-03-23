@@ -1,0 +1,14 @@
+# Start up the Websockets server project of the admin user
+[Unit]
+Description=Start WebSocket Server
+After=network.target
+
+[Service]
+User=admin
+Type=simple
+ExecStart=/usr/bin/node /home/admin/WebSocketServer/src/index.js >> /home/admin/WebSocketServer/websocket.log 2>&1 &
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

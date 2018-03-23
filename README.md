@@ -31,7 +31,7 @@ _http://localhost:8080/status.html?host=localhost:8080_
 *to use a custom host, just change the value of the _host_ query 
 
 ~The production demo-test page is at
-_http://45.33.83.200/status.html_
+_http://45.33.83.200:8080/status.html_
 
 To view http access logs, go to _/access_log_
 To view websocket access logs, go to _/websocket_log_
@@ -55,3 +55,19 @@ Trigger sending message to to the WebSocket Server via _Send_ button.
 View all presently connected clients to server in Blue table.
 
 View messages received from Server in Bisque rectangle at page bottom.
+
+## Running as a service
+On a linux machine that supports _systemd_ services;
+- place the **websocket-server.service** file in the **/etc/systemd/system** directory
+- enable, and check that the service is running by
+```bash
+# enable the service
+sudo systemctl enable websocket-server.service
+# start the service
+sudo systemctl start websocket-server
+# check the service is enabled and running
+systemctl status websocket-server
+```
+
+The service is configured to start the WebSocket server on system startup, and to restart it on error.
+
