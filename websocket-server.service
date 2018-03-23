@@ -6,7 +6,7 @@ After=network.target
 [Service]
 User=admin
 Type=simple
-ExecStart=/usr/bin/node /home/admin/WebSocketServer/src/index.js >> /home/admin/WebSocketServer/websocket.log 2>&1 &
+ExecStart=/bin/bash -c 'exec /usr/bin/node /home/admin/WebSocketServer/src/index.js >> /home/admin/WebSocketServer/websocket.log 2>&1'
 Restart=on-failure
 
 [Install]
