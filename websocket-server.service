@@ -4,7 +4,7 @@ Description=Start WebSocket Server
 After=network.target
 
 [Service]
-User=admin
+User=websocket_server
 Type=simple
 ExecStart=/bin/bash -c 'exec /usr/bin/node /home/admin/WebSocketServer/src/index.js >> /home/admin/WebSocketServer/websocket.log 2>&1'
 Restart=on-failure
