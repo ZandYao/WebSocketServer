@@ -10,7 +10,7 @@ Install project dependencies with **node/npm**
 # Install all node/npm libraries, including dev-dependencies
 npm install
 # Install only those npm libraries needed to run the app in production
-composer install --production
+npm install --production
 ```
 
 To attempt to install latest compatible packages version
