@@ -28,7 +28,6 @@ const closeConnection = document.getElementById('close');
 /* Control constants that define the context of the message sent */
 const CONTROL_MESSAGES = Object.freeze({
     RESET_SERVER: 'RESET_SERVER',
-    SET_UUID: 'SET_UUID',
     SEND_DATA: 'SEND_DATA',
     BROADCAST: 'BROADCAST',
     INIT_CLIENT: 'INIT_CLIENT',
@@ -69,6 +68,8 @@ const handleIncoming = function(msg){
         wsTargets.classList.remove('no-connect');
         break;
     case CONTROL_MESSAGES.SEND_DATA:    /* falls through */
+    case CONTROL_MESSAGES.BROADCAST:    /* falls through */
+    case CONTROL_MESSAGES.TARGET_CLIENT:    /* falls through */
     default:
         results.value = messageData.content;
         break;

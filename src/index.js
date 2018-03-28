@@ -105,13 +105,13 @@ const startWebSocketServer = function() {
         ws.on('message', function (msg) {
             let sendMessage = {};
             const message = JSON.parse(msg);
-            console.log(`Received data: ${message.content}, Status: ${message.status}`);
+            console.log(`Type: ${message.type}, Received data: ${message.content}, Status: ${message.status}`);
 
             switch (message.type) {
                 case CONTROL_MESSAGES.RESET_SERVER:
                 wss.close();
                 /* Restart the server 5 seconds after closing it */
-                setTimeout(() => startWebSocketServer(), 5000);
+                setTimeout(() => startWebSocketServer(), 1000);
                 break;
             case CONTROL_MESSAGES.INIT_CLIENT:
                 connectedClients.get(ws).identity = message.content;
