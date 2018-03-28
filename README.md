@@ -31,7 +31,7 @@ _http://localhost:8080/status.html?host=localhost:8080_
 *to use a custom host, just change the value of the _host_ query 
 
 ~The production demo-test page is at
-_http://45.33.83.200:8080/status.html_
+_http://173.255.226.41:8080/status.html_
 
 To view http access logs, go to _/access_log_
 To view websocket access logs, go to _/websocket_log_

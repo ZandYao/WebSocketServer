@@ -2,7 +2,7 @@
     The address of the WebSocket Server
     - if '?host=192.168.1.150:8080' query string is present, then assume WebSocket server is on the supplied host
 */
-const serverWebSocket = 'ws://45.33.83.200:8080/';
+const serverWebSocket = 'ws://173.255.226.41:8080/';
 const customWebSocket = (new URL(location.href)).searchParams.get('host');
 const wsAddress = customWebSocket ? `ws://${customWebSocket}` : serverWebSocket;
 //const wssAddress = 'wss://192.168.1.150:8080/';
