@@ -67,7 +67,17 @@ sudo systemctl enable websocket-server.service
 sudo systemctl start websocket-server
 # check the service is enabled and running
 systemctl status websocket-server
+# check that nodejs program of service is running off port 8080 
+sudo lsof -i -P
 ```
 
 The service is configured to start the WebSocket server on system startup, and to restart it on error.
+
+In order to shutdown the service;
+```bash
+# stop the service 
+sudo systemctl stop websocket-server
+# to disable the service from loading on reboot/startup
+sudo systemctl disable websocket-server.service
+```
 
